@@ -1,0 +1,21 @@
+version: '3'
+services:
+  db:
+    container_name: deal_postgress
+    image: postgres:13
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: deal
+
+  pgadmin:
+    container_name: deal_pgadmin
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: boban.mijajlovic.rs@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - 5050:80
