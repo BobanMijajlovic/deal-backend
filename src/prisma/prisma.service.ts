@@ -25,4 +25,21 @@ export class PrismaService
   async onModuleDestroy() {
     await this.$disconnect();
   }
+
+  async deleteOne(id: number, model: string) {
+
+      const r = await this[model].findUnique({
+          where: {
+              id
+          }
+      })
+
+      if(!r) return {id}
+
+    return this[model].delete({
+          where: {
+            id
+          }
+      })
+  }
 }
