@@ -1,6 +1,7 @@
 import {
   ConflictException,
   ForbiddenException,
+  Inject,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -12,6 +13,7 @@ import { SignInDto, SignUpDto } from './dto';
 import { ENV } from '@app/constants';
 import { UserModel } from '@app/prisma/d';
 import { PrismaService } from '@app/prisma/prisma.service';
+import { CACHE_MANAGER, Cache} from '@nestjs/cache-manager';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +21,7 @@ export class AuthService {
     private prisma: PrismaService,
     private jwtService: JwtService,
     private config: ConfigService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   private async createTokens(user: UserModel) {
