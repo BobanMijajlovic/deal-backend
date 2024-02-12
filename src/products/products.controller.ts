@@ -1,14 +1,16 @@
-import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query} from '@nestjs/common';
 import {ProductsService} from './products.service';
 import {ProductDto} from 'src/products/dto/product.dto';
 import {Public} from "@app/common/decorators";
 import {IdObjectParam} from "@app/common/validation/IdObjectParam";
 import {ProductUpdateDto} from "@app/products/dto/product_update.dto";
+import {PaginationDto} from "@app/common/dto/pagination/Pagination.dto";
 
 @Public()
 @Controller('products')
 export class ProductsController {
-    constructor(private readonly productsService: ProductsService) { }
+    constructor(private readonly productsService: ProductsService) {
+    }
 
     @Post()
     @HttpCode(HttpStatus.OK)
@@ -17,8 +19,10 @@ export class ProductsController {
     }
 
     @Get()
-    findAll() {
-        return this.productsService.findAll();
+    findAll(
+        @Query() paginationDto: PaginationDto
+    ) {
+        return this.productsService.findAll(paginationDto);
     }
 
     @Get(':id')
