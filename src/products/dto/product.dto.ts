@@ -1,10 +1,11 @@
-import {IsNumber, IsString, Length, Min} from "class-validator";
+import {IsNumber, IsString, Length, Min, IsNotEmpty} from "class-validator";
 
 export class ProductDto {
     @IsString()
-    @Length(0,256)
+    @Length(0,2)
     readonly title: string;
     @IsNumber()
-    @Min(0)
+    @Min(10)
+    @IsNotEmpty()
     readonly price: number;
 }
